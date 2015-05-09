@@ -1,0 +1,28 @@
+{
+    "name": "jrean/blogit",
+    "description": "Blog with Git(hub). Fetch and Parse Documents hosted on Github.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jong",
+            "email": "go@askjong.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.5.9",
+        "knplabs/github-api": "~1.3",
+        "vlucas/phpdotenv": "~1.0",
+        "erusev/parsedown": "~1.5",
+        "illuminate/support": "~5.0",
+        "symfony/yaml": "~2.6"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "~2.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jrean\\Blogit\\": "src/"
+        }
+    }
+}
