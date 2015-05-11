@@ -1,3 +1,4 @@
 /vendor
 .ctags
 tags
+composer.lock
