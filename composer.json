@@ -25,11 +25,5 @@
             "Jrean\\Blogit\\": "src/"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Jrean\\Tests\\Blogit\\": "tests/"
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "minimum-stability": "stable"
 }
