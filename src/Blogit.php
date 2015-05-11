@@ -101,11 +101,11 @@ class Blogit extends AbstractGithubDocumentRepository
     }
 
     /**
-     * Fetch news and updates for index page.
+     * Fetch news and updates for index page display.
      *
      * @return \Illuminate\Support\Collection Articles
      */
-    public function getForIndex()
+    public function getArticlesForIndex()
     {
         $articles  = $this->getArticles();
         $news      = $this->sortByCreatedAtDesc($articles);
