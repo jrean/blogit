@@ -135,7 +135,6 @@ abstract class AbstractDocument
         foreach($this->commits as $commit) {
             $commiter = array_get($commit, 'author.login');
             if ( ! array_has($contributors, $commiter)) {
-                /* $contributors[$commiter] = [ */
                 $contributors[] = [
                     'name'       => $commiter,
                     'avatar_url' => array_get($commit, 'author.avatar_url'),
