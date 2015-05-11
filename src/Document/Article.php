@@ -33,7 +33,7 @@ class Article extends AbstractDocument
      *
      * @var array
      */
-    protected $tags;
+    protected $tags = [];
 
     /**
      * Create a new Article instance.

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of.Blogit
+ * This file is part of Blogit.
  *
  * (c) Jong <go@askjong.com>
  *
@@ -46,7 +46,7 @@ class Blogit extends AbstractGithubDocumentRepository
     /**
      * Fetch all Articles.
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection Articles
      */
     public function getArticles()
     {
@@ -70,7 +70,7 @@ class Blogit extends AbstractGithubDocumentRepository
     /**
      * Fetch all articles sorted by date.
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection Articles
      */
     public function getNewArticles()
     {
@@ -80,7 +80,7 @@ class Blogit extends AbstractGithubDocumentRepository
     /**
      * Fetch all Updated Articles Sorted by Date.
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection Articles
      */
     public function getUpdatedArticles()
     {
@@ -103,7 +103,7 @@ class Blogit extends AbstractGithubDocumentRepository
     /**
      * Fetch news and updates for index page.
      *
-     * @return array Collection of Articles
+     * @return \Illuminate\Support\Collection Articles
      */
     public function getForIndex()
     {
@@ -111,5 +111,29 @@ class Blogit extends AbstractGithubDocumentRepository
         $news      = $this->sortByCreatedAtDesc($articles);
         $updates   = $this->sortByUpdatedAtDesc($articles);
         return compact('news', 'updates');
+    }
+
+    /**
+     * Fetch Articles by a tag.
+     *
+     * @param  string $tag
+     * @return \Illuminate\Support\Collection Articles
+     */
+    public function getArticlesByTag($tag)
+    {
+        return $this->getArticles()->filter(function($article) use($tag) {
+            return in_array($tag, $article->getTags());
+        });
+    }
+
+    /**
+     * Fetch Articles by a tag and sort Desc by creation date.
+     *
+     * @param  string $tag
+     * @return \Illuminate\Support\Collection Articles
+     */
+    public function getArticlesByTagDesc($tag)
+    {
+        return $this->sortByCreatedAtDesc($this->getByTag($tag));
     }
 }
