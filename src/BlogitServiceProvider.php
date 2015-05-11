@@ -72,7 +72,7 @@ class BlogitServiceProvider extends ServiceProvider
 
             return new Blogit($client);
         });
-        $app->alias('blogit', 'Jrean\Blogit\Blogit');
+        $app->alias('blogit', 'Jrean\Blogit\Repository\DocumentRepositoryInterface');
     }
 
     /**
