@@ -29,6 +29,13 @@ class Article extends AbstractDocument
     protected $slug;
 
     /**
+     * Article tags.
+     *
+     * @var array
+     */
+    protected $tags;
+
+    /**
      * Create a new Article instance.
      *
      * @param \Jrean\Blogit\Parser\ParserInterface $parser
@@ -43,7 +50,35 @@ class Article extends AbstractDocument
 
         $this
             ->setTitle($contentMetadata)
-            ->setSlug($contentMetadata);
+            ->setSlug($contentMetadata)
+            ->setTags($contentMetadata);
+    }
+
+    /**
+     * Set the Article title.
+     *
+     * @param  array $metadata
+     * @return \Jrean\Blogit\Document\Article
+     *
+     * @throws \Exception
+     */
+    protected function setTitle(array $metadata)
+    {
+        if ( ! array_key_exists('title', $metadata) || empty($metadata['title'])) {
+            throw new Exception('Title metadata is missing or empty.');
+        }
+        $this->title = $metadata['title'];
+        return $this;
+    }
+
+    /**
+     * Get the Article title.
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**
@@ -73,29 +108,27 @@ class Article extends AbstractDocument
     }
 
     /**
-     * Set the Article title.
+     * Set the Article tag(s).
      *
      * @param  array $metadata
      * @return \Jrean\Blogit\Document\Article
-     *
-     * @throws \Exception
      */
-    public function setTitle(array $metadata)
+    protected function setTags(array $metadata)
     {
-        if ( ! array_key_exists('title', $metadata) || empty($metadata['title'])) {
-            throw new Exception('Title metadata is missing or empty.');
+        if (array_key_exists('tags', $metadata) && !empty($metadata['tags'])) {
+            $this->tags = $metadata['tags'];
         }
-        $this->title = $metadata['title'];
+
         return $this;
     }
 
     /**
-     * Get the Article title.
+     * Get the Article tag(s).
      *
-     * @return string
+     * @return array
      */
-    public function getTitle()
+    public function getTags()
     {
-        return $this->title;
+        return $this->tags;
     }
 }

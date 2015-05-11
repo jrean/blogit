@@ -10,9 +10,9 @@
  */
 namespace Jrean\Blogit\Parser;
 
+use Exception;
 use Parsedown;
 use Symfony\Component\Yaml\Yaml;
-use Exception;
 
 class DocumentParser extends Parsedown implements ParserInterface
 {
