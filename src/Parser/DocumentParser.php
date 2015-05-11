@@ -12,6 +12,7 @@ namespace Jrean\Blogit\Parser;
 
 use Parsedown;
 use Symfony\Component\Yaml\Yaml;
+use Exception;
 
 class DocumentParser extends Parsedown implements ParserInterface
 {
@@ -36,10 +37,14 @@ class DocumentParser extends Parsedown implements ParserInterface
      *
      * @param  string $content
      * @return array
+     *
+     * @throws \Exception
      */
     public function parseMetadata($content)
     {
-        return Yaml::parse($this->parseSection($content, 0));
+        $metadata = Yaml::parse($this->parseSection($content, 0));
+        if ($metadata === null) throw new Exception('Document metadata not found.');
+        return $metadata;
     }
 
     /**

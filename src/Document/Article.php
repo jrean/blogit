@@ -40,14 +40,16 @@ class Article extends AbstractDocument
         parent::__construct($parser, $metadata, $commits);
 
         $contentMetadata = $this->parser->parseMetadata($this->getContent());
-        $this->title     = $contentMetadata['title'];
-        $this->setSlug($contentMetadata);
+
+        $this
+            ->setTitle($contentMetadata)
+            ->setSlug($contentMetadata);
     }
 
     /**
      * Set the Article slug.
      *
-     * @param array $metadata
+     * @param  array $metadata
      * @return \Jrean\Blogit\Document\Article
      */
     protected function setSlug(array $metadata)
@@ -55,7 +57,7 @@ class Article extends AbstractDocument
         if (array_key_exists('slug', $metadata) && !empty($metadata['slug'])) {
             $this->slug = str_slug($metadata['slug']);
         } else {
-            $this->slug = str_slug($metadata['title']);
+            $this->slug = str_slug($this->title);
         }
         return $this;
     }
@@ -68,6 +70,23 @@ class Article extends AbstractDocument
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set the Article title.
+     *
+     * @param  array $metadata
+     * @return \Jrean\Blogit\Document\Article
+     *
+     * @throws \Exception
+     */
+    public function setTitle(array $metadata)
+    {
+        if ( ! array_key_exists('title', $metadata) || empty($metadata['title'])) {
+            throw new Exception('Title metadata is missing or empty.');
+        }
+        $this->title = $metadata['title'];
+        return $this;
     }
 
     /**
