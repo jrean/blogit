@@ -15,84 +15,91 @@ use Jrean\Blogit\Parser\ParserInterface;
 abstract class AbstractDocument
 {
     /**
-     * Parser instance.
+     * Parser Instance.
      *
      * @var \Jrean\Blogit\Parser\ParserInterface
      */
     protected $parser;
 
     /**
-     * Document filename.
+     * Document Filename.
      *
      * @var string
      */
     protected $filename;
 
     /**
-     * Document filepath.
+     * Document Filepath.
      *
      * @var string
      */
     protected $path;
 
     /**
-     * Document sha.
+     * Document Sha.
      *
      * @var string
      */
     protected $sha;
 
     /**
-     * Document url.
+     * Document Url.
      *
      * @var string
      */
     protected $url;
 
     /**
-     * Document html url.
+     * Document Html Url.
      *
      * @var string
      */
     protected $htmlUrl;
 
     /**
-     * Document Git url.
+     * Document Git Url.
      *
      * @var string
      */
     protected $gitUrl;
 
     /**
-     * Document downlowd url.
+     * Document History Url.
+     *
+     * @var string
+     */
+    protected $historyUrl;
+
+    /**
+     * Document Downlowd Url.
      *
      * @var string
      */
     protected $downloadUrl;
 
     /**
-     * Document creation date.
+     * Document Creation Date.
      *
      * @var string
      */
     protected $createdAt;
 
     /**
-     * Document last udpate date.
+     * Document Last Udpate Date.
      *
      * @var string
      */
     protected $updatedAt;
 
     /**
-     * Document content.
+     * Document Content.
      *
      * @var string base64 encoded
      */
     protected $content;
 
     /**
-     * Document commit(s).
+     * Document Commit(s).
      *
      * @var array
      */
@@ -121,7 +128,8 @@ abstract class AbstractDocument
 
         $this
             ->setCreatedAt($commits)
-            ->setUpdatedAt($commits);
+            ->setUpdatedAt($commits)
+            ->setHistoryUrl();
     }
 
     /**
@@ -217,6 +225,27 @@ abstract class AbstractDocument
     public function getGitUrl()
     {
         return $this->gitUrl;
+    }
+
+    /**
+     * Set the Document History Url.
+     *
+     * @return \Jrean\Blogit\Document\Document
+     */
+    protected function setHistoryUrl()
+    {
+        $this->historyUrl = 'https://github.com/' . env('GITHUB_USER') . '/' . env('GITHUB_REPOSITORY') . '/commits/master/src/' . $this->filename;
+        return $this;
+    }
+
+    /**
+     * Get the Document History Url.
+     *
+     * @return string
+     */
+    public function getHistoryUrl()
+    {
+        return $this->historyUrl;
     }
 
     /**
