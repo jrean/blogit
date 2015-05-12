@@ -36,6 +36,13 @@ class Article extends AbstractDocument
     protected $tags = [];
 
     /**
+     * Article History Url.
+     *
+     * @var string
+     */
+    protected $historyUrl;
+
+    /**
      * Create a new Article instance.
      *
      * @param \Jrean\Blogit\Parser\ParserInterface $parser
@@ -51,7 +58,8 @@ class Article extends AbstractDocument
         $this
             ->setTitle($contentMetadata)
             ->setSlug($contentMetadata)
-            ->setTags($contentMetadata);
+            ->setTags($contentMetadata)
+            ->setHistoryUrl();
     }
 
     /**
@@ -130,5 +138,32 @@ class Article extends AbstractDocument
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Set the Document History Url.
+     *
+     * @return \Jrean\Blogit\Document\Document
+     */
+    protected function setHistoryUrl()
+    {
+        $base          = 'https://github.com/';
+        $user          = env('GITHUB_USER');
+        $repository    = env('GITHUB_REPOSITORY');
+        $path          = '/commits/master/';
+        $directoryPath = env('GITHUB_ARTICLES_DIRECTORY_PATH');
+
+        $this->historyUrl = $base . $user . '/' . $repository . $path . $directoryPath . '/' . $this->filename;
+        return $this;
+    }
+
+    /**
+     * Get the Document History Url.
+     *
+     * @return string
+     */
+    public function getHistoryUrl()
+    {
+        return $this->historyUrl;
     }
 }

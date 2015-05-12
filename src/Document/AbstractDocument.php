@@ -64,13 +64,6 @@ abstract class AbstractDocument
     protected $gitUrl;
 
     /**
-     * Document History Url.
-     *
-     * @var string
-     */
-    protected $historyUrl;
-
-    /**
      * Document Downlowd Url.
      *
      * @var string
@@ -128,8 +121,7 @@ abstract class AbstractDocument
 
         $this
             ->setCreatedAt($commits)
-            ->setUpdatedAt($commits)
-            ->setHistoryUrl();
+            ->setUpdatedAt($commits);
     }
 
     /**
@@ -225,27 +217,6 @@ abstract class AbstractDocument
     public function getGitUrl()
     {
         return $this->gitUrl;
-    }
-
-    /**
-     * Set the Document History Url.
-     *
-     * @return \Jrean\Blogit\Document\Document
-     */
-    protected function setHistoryUrl()
-    {
-        $this->historyUrl = 'https://github.com/' . env('GITHUB_USER') . '/' . env('GITHUB_REPOSITORY') . '/commits/master/src/' . $this->filename;
-        return $this;
-    }
-
-    /**
-     * Get the Document History Url.
-     *
-     * @return string
-     */
-    public function getHistoryUrl()
-    {
-        return $this->historyUrl;
     }
 
     /**
