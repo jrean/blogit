@@ -49,7 +49,7 @@ class Blogit extends AbstractGithubDocumentRepository
 
         $this->articlesDirPath = env('GITHUB_ARTICLES_DIRECTORY_PATH');
         $this->pagesDirPath    = env('GITHUB_PAGES_DIRECTORY_PATH');
-
+        $this->articles        = new BlogitCollection();
         $this->initArticles();
     }
 
@@ -60,8 +60,7 @@ class Blogit extends AbstractGithubDocumentRepository
      */
     protected function initArticles()
     {
-        $this->articles = new BlogitCollection();
-        $items          = parent::getAll($this->articlesDirPath);
+        $items = parent::getAll($this->articlesDirPath);
 
         foreach ($items as $item) {
             $githubMetadata = $this->getByPath($item['path']);
@@ -76,7 +75,7 @@ class Blogit extends AbstractGithubDocumentRepository
         }
 
         foreach ($this->articles as $article) {
-            $related = $this->getRelatedArticlesByTags($article, $this->articles);
+            $related = $this->getRelatedArticlesByTags($article);
             $article->setTagsRelated($related);
         }
     }
@@ -84,31 +83,11 @@ class Blogit extends AbstractGithubDocumentRepository
     /**
      * Get all Articles.
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Jrean\Blogit\BlogitCollection
      */
     public function getArticles()
     {
         return $this->articles;
-    }
-
-    /**
-     * Get Articles sorted by creation date DESC.
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function getNewArticles()
-    {
-        return $this->getArticles()->sortByCreatedAtDesc();
-    }
-
-    /**
-     * Get updated Articles sorted by date DESC.
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function getUpdatedArticles()
-    {
-        return $this->getArticles()->sortByUpdatedAtDesc();
     }
 
     /**
@@ -138,19 +117,6 @@ class Blogit extends AbstractGithubDocumentRepository
     }
 
     /**
-     * Get Articles with tag(s).
-     *
-     * @param  array $tags
-     * @return \Jrean\Blogit\BlogitCollection
-     */
-    public function getArticlesByTags(array $tags)
-    {
-        return $this->getArticles()->filter(function($article) use($tags) {
-            return !empty(array_intersect($tags, $article->getTags()));
-        });
-    }
-
-    /**
      * Get related Articles with the given tag(s).
      *
      * @param  \Jrean\Blogit\Document\Article $article
@@ -161,6 +127,19 @@ class Blogit extends AbstractGithubDocumentRepository
         $related = $this->getArticlesByTags($article->getTags());
         return $related->reject(function($item) use($article) {
             return $item->getSha() == $article->getSha();
+        });
+    }
+
+    /**
+     * Get Articles with tag(s).
+     *
+     * @param  array $tags
+     * @return \Jrean\Blogit\BlogitCollection
+     */
+    public function getArticlesByTags(array $tags)
+    {
+        return $this->getArticles()->filter(function($article) use($tags) {
+            return !empty(array_intersect($tags, $article->getTags()));
         });
     }
 }
