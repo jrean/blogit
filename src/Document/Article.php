@@ -11,6 +11,7 @@
 namespace Jrean\Blogit\Document;
 
 use Jrean\Blogit\Parser\ParserInterface;
+use Illuminate\Support\Collection;
 
 class Article extends AbstractDocument
 {
@@ -41,6 +42,13 @@ class Article extends AbstractDocument
      * @var string
      */
     protected $historyUrl;
+
+    /**
+     * Tag(s) Related Articles.
+     *
+     * @var \Illuminate\Support\Collection
+     */
+    protected $tagsRelated;
 
     /**
      * Create a new Article instance.
@@ -141,9 +149,9 @@ class Article extends AbstractDocument
     }
 
     /**
-     * Set the Document History Url.
+     * Set the Article History Url.
      *
-     * @return \Jrean\Blogit\Document\Document
+     * @return \Jrean\Blogit\Document\Article
      */
     protected function setHistoryUrl()
     {
@@ -158,12 +166,34 @@ class Article extends AbstractDocument
     }
 
     /**
-     * Get the Document History Url.
+     * Get the Article History Url.
      *
      * @return string
      */
     public function getHistoryUrl()
     {
         return $this->historyUrl;
+    }
+
+    /**
+     * Set tags related articles.
+     *
+     * @param  \Illuminate\Support\Collection $articles
+     * @return \Jrean\Blogit\Document\Article
+     */
+    public function setTagsRelated(Collection $articles)
+    {
+        $this->tagsRelated = $articles;
+        return $this;
+    }
+
+    /**
+     * Get tags related articles.
+     *
+     * @return \Illuminate\Support\Collection $articles
+     */
+    public function getTagsRelated()
+    {
+        return $this->tagsRelated;
     }
 }

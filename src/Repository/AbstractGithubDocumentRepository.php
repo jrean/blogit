@@ -79,36 +79,4 @@ abstract class AbstractGithubDocumentRepository implements DocumentRepositoryInt
     {
         return $this->github->api('repo')->commits()->all($this->user, $this->repository, ['path' => $path]);
     }
-
-    /**
-     * Sort the collection by dates of creation DESC.
-     *
-     * @param  \Illuminate\Support\Collection $documents
-     * @return \Illuminate\Support\Collection
-     */
-    public function sortByCreatedAtDesc(Collection $documents)
-    {
-        return $documents->sortByDesc(function($document) {
-            return $document->getCreatedAt();
-        });
-    }
-
-    /**
-     * Sort the collection by dates of update DESC.
-     *
-     * @param  \Illuminate\Support\Collection $documents
-     * @return \Illuminate\Support\Collection
-     */
-    public function sortByUpdatedAtDesc(Collection $documents)
-    {
-        $documents = $documents->filter(function($document) {
-            if ($document->getCreatedAt() != $document->getUpdatedAt()) {
-                return true;
-            }
-        });
-
-        return $documents->sortByDesc(function($document) {
-            return $document->getUpdatedAt();
-        });
-    }
 }

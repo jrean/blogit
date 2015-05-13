@@ -11,6 +11,7 @@
 namespace Jrean\Blogit\Document;
 
 use Jrean\Blogit\Parser\ParserInterface;
+use Carbon\Carbon;
 
 abstract class AbstractDocument
 {
@@ -278,6 +279,17 @@ abstract class AbstractDocument
     }
 
     /**
+     * Get the Document last update date diff for humans.
+     *
+     * @param  string $format
+     * @return string
+     */
+    public function getUpdatedAtDiff()
+    {
+        return (new Carbon)->createFromFormat('Y-m-d H:i:s', $this->updatedAt)->diffForHumans();
+    }
+
+    /**
      * Get the document content.
      *
      * @return string
@@ -315,5 +327,15 @@ abstract class AbstractDocument
     public function getCommits()
     {
         return $this->commits;
+    }
+
+    /**
+     * Get the last commit Github url.
+     *
+     * @return string
+     */
+    public function getLastCommitUrl()
+    {
+        return array_get(head($this->getCommits()), 'html_url');
     }
 }
