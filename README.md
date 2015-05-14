@@ -80,8 +80,6 @@ will push your files.
 
 Update `app/Http/routes.php`:
 
-    use Jrean\Blogit\Blogit;
-
     $app->get('/blogit', function() use($app) {
 
         // Jrean\Blogit\Blogit instance
@@ -127,7 +125,8 @@ Update `app/Http/routes.php`:
 
 Update `app/Http/Controllers/YourController.php`:
 
-    <?php namespace App\Http\Controllers;
+    <?php
+    namespace App\Http\Controllers;
 
     use App\Http\Controllers\Controller;
     use Jrean\Blogit\Repository\DocumentRepositoryInterface;
@@ -180,7 +179,7 @@ I recommand to stick with `.md` files:
     title: My Article Title
     slug: my-custom-slug
     tags: [tag, tag, tag]
-    -------
+    ---
     ## My Markdown Content
 
 The `.md` file contains two sections separated by a `delimiter` string. One
@@ -194,21 +193,28 @@ You can use more if you want.
 ### Metadata
 
 Metada will be parsed as `Yaml` so feel free and creative because
-you'll have access to that metadata as an `array`. The only required key is the
+you'll access them through an `array`. The only required key is the
 `title`. `slug` and `tags` are optionnals. If you don't provide a custom
 `slug`, one will be auto generated based on the `title` value...
 
 ### Content
 
-Everything under the `---` will be parsed as `Markdown`. Again, fell free and
+Everything under `---` will be parsed as `Markdown`. Again, fell free and
 creative.
 
 ## Extending and Customize Blogit
 
-I try and will try my best to give you the
-ability to extend and override `Blogit`. For now you can easily hack and extend
-`Jrean\Blogit\Blogit.php` and `Jrean\Blogit\BlogitCollection.php` to bring
-your own logic, methods and attributes.
+I try and will try my best to give you the ability to extend and override
+`Blogit`. For now you can easily hack and extend `Jrean\Blogit\Blogit.php` and
+`Jrean\Blogit\BlogitCollection.php` to bring your own logic, methods and
+attributes.
+
+### Be Creative
+
+With the Blogit API you have access to methods and properties about your
+content, metadata, commits, contributors, tags, dates, Github links,...
+Have a look at `Jrean\Blogit\Document\*`, `Jrean\Blogit\Repository\*`
+and `Jrean\Blogit\Blogit.php`.
 
 ## Contribute
 
