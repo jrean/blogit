@@ -11,38 +11,48 @@ Git".
 - Open source your content and allow easy contributions
 - Write, Commit, Push, Live...
 
-## Installation This project can be installed via
+## Installation
 
-[Composer](http://getcomposer.org)
+This project can be installed via [Composer](http://getcomposer.org)
+To get the latest version of Blogit, simply add the following line to
+the require block of your composer.json file:
 
-    $ composer require jrean/blogit
+    "jrean/blogit": "~0.1.0"
+    // or
+    "jrean/blogit": "dev-master"
 
-## Add the Service Provider
+You'll then need to run `composer install` or `composer update` to download it and
+have the autoloader updated.
 
-### Laravel
+### Add the Service Provider
 
-Update the production `providers` array in `config/app.php`:
+Once Blogit is installed, you need to register the service provider.
 
-    'Jrean\Blogit\BlogitServiceProvider'
+#### Laravel
 
-### Lumen
+Open up `config/app.php` and add the following to the `providers` key:
 
-Update `bootstrap/app.php`:
+* `'Jrean\Blogit\BlogitServiceProvider'`
 
-    $app->register('Jrean\Blogit\BlogitServiceProvider');
+#### Lumen
 
-## Enable Dotenv File (Lumen only)
+Open up `bootstrap/app.php` and add the following:
+
+* `$app->register('Jrean\Blogit\BlogitServiceProvider');`
+
+### Enable Dotenv File (Lumen only)
 
 Uncomment the following line in `config/app.php`:
 
     // Dotenv::load(__DIR__.'/../');
 
-## Settings
+## Configuration
 
 Update your `.env` file with the following keys and assign your
 values:
 
-    GITHUB_USER=your_github_user_name GITHUB_TOKEN=your_github_token
+    GITHUB_USER=your_github_user_name
+    GITHUB_TOKEN=your_github_token
     GITHUB_REPOSITORY=your_repository_name
     GITHUB_ARTICLES_DIRECTORY_PATH=content_root_directory_name
 
@@ -197,3 +207,7 @@ Please, feel free to comment, contribute and help.
 
 I will write soon a dedicated article for `Blogit` which is now used
 on `Production` for [Askjong.com](http://www.askjong.com "AskJong, Quick Updates and Practical Approaches about anything Tech., Laravel, Vim, Php, DigitalOcean and Web Programming.")
+
+## License
+
+Blogit is licensed under [The MIT License (MIT)](LICENSE).
