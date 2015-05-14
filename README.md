@@ -42,7 +42,7 @@ Open up `bootstrap/app.php` and add the following:
 
 ### Enable Dotenv File (Lumen only)
 
-Uncomment the following line in `config/app.php`:
+Uncomment the following line in `bootstrap/app.php`:
 
     // Dotenv::load(__DIR__.'/../');
 
@@ -51,21 +51,25 @@ Uncomment the following line in `config/app.php`:
 Update your `.env` file with the following keys and assign your
 values:
 
-    GITHUB_USER=your_github_user_name
-    GITHUB_TOKEN=your_github_token
-    GITHUB_REPOSITORY=your_repository_name
-    GITHUB_ARTICLES_DIRECTORY_PATH=content_root_directory_name
+    GITHUB_USER                    =your_github_user_name
+    GITHUB_TOKEN                   =your_github_token
+    GITHUB_REPOSITORY              =your_repository_name
+    GITHUB_ARTICLES_DIRECTORY_PATH =content_root_directory_name
 
-### GITHUB_TOKEN
+* `GITHUB_TOKEN`
+
+Your Github username.
+
+* `GITHUB_TOKEN`
 
 Visit [Github](https://github.com/settings/tokens) and create a `Personal
 Access Tokens`
 
-### GITHUB_REPOSITORY
+* `GITHUB_REPOSITORY`
 
-Create a new `Public` repository.
+Create a new `Public` repository or use an existing one.
 
-### GITHUB_ARTICLES_DIRECTORY_PATH
+* `GITHUB_ARTICLES_DIRECTORY_PATH`
 
 Inside your repository create a directory (for instance `articles`) where you
 will push your files.
@@ -78,8 +82,10 @@ Update `app/Http/routes.php`:
 
     use Jrean\Blogit\Blogit;
 
-    $app->get('/blogit', function() use($app) { // Jrean\Blogit\Blogit instance
-    $blogit   = $app->make('blogit');
+    $app->get('/blogit', function() use($app) {
+
+        // Jrean\Blogit\Blogit instance
+        $blogit   = $app->make('blogit');
 
         // Jrean\Blogit\BlogitCollection
         $articles = $blogit->getArticles();
@@ -93,6 +99,7 @@ Update `app/Http/routes.php`:
         return view('blogit.index', compact('news', 'updates')); });
 
     $app->get('/blogit/{slug}', function($slug) use($app) {
+
         // Jrean\Blogit\Blogit instance
         $blogit  = $app->make('blogit');
 
@@ -201,7 +208,8 @@ your own logic, methods and attributes.
 ## Contribute
 
 This package is (yet) under active development and refactoring.
-Please, feel free to comment, contribute and help.
+Please, feel free to comment, contribute and help. I would like/love to bring
+`Unit tests`.
 
 ## Example
 
