@@ -12,26 +12,34 @@ Git".
 - Write, Commit, Push, Live...
 
 ## Installation This project can be installed via
+
 [Composer](http://getcomposer.org)
 
     $ composer require jrean/blogit
 
 ## Add the Service Provider
 
-### Laravel Update the production `providers` array in `config/app.php`.
+### Laravel
+
+Update the production `providers` array in `config/app.php`:
 
     'Jrean\Blogit\BlogitServiceProvider'
 
-### Lumen Update `bootstrap/app.php`.
+### Lumen
+
+Update `bootstrap/app.php`:
 
     $app->register('Jrean\Blogit\BlogitServiceProvider');
 
-## Enable Dotenv File (Lumen only) Uncomment the following line in
-`config/app.php`
+## Enable Dotenv File (Lumen only)
+
+Uncomment the following line in `config/app.php`:
 
     // Dotenv::load(__DIR__.'/../');
 
-## Settings Update your `.env` file with the following keys and assign your
+## Settings
+
+Update your `.env` file with the following keys and assign your
 values:
 
     GITHUB_USER=your_github_user_name GITHUB_TOKEN=your_github_token
@@ -39,19 +47,24 @@ values:
     GITHUB_ARTICLES_DIRECTORY_PATH=content_root_directory_name
 
 ### GITHUB_TOKEN
+
 Visit [Github](https://github.com/settings/tokens) and create a `Personal
 Access Tokens`
 
 ### GITHUB_REPOSITORY
+
 Create a new `Public` repository.
 
 ### GITHUB_ARTICLES_DIRECTORY_PATH
+
 Inside your repository create a directory (for instance `articles`) where you
 will push your files.
 
 ## Basic usage
 
-### Without Controller Update `app/Http/routes.php`:
+### Without Controller
+
+Update `app/Http/routes.php`:
 
     use Jrean\Blogit\Blogit;
 
@@ -81,7 +94,9 @@ will push your files.
         return view('blogit.show', compact('article'));
     });
 
-### With Controller Update `app/Http/routes.php`:
+### With Controller
+
+Update `app/Http/routes.php`:
 
     $app->get('/', [
         'uses' => 'App\Http\Controllers\YourController@index',
@@ -128,7 +143,7 @@ Update `app/Http/Controllers/YourController.php`:
         }
     }
 
-### Inside a Blade view For insance...
+### Views (Blade for instance)
 
     @foreach($articles as $article)
         {{ $article->getTitle() }}
@@ -141,7 +156,9 @@ Update `app/Http/Controllers/YourController.php`:
         ...
     @endforeach
 
-## Basic File Format I recommand to stick with `.md` files.
+## Basic File Format
+
+I recommand to stick with `.md` files:
 
     title: My Article Title
     slug: my-custom-slug
@@ -149,28 +166,34 @@ Update `app/Http/Controllers/YourController.php`:
     -------
     ## My Markdown Content 
 
-The `.md` file contains two sections separated by `-------`.
+The `.md` file contains two sections separated by `-------`. One for the
+`metadata`, one for the `content`.
 
 ### Metadata
+
 Metada will be parsed as `Yaml` so feel free and creative because
 you'll have access to that metadata as an `array`. The only required key is the
 `title`. `slug` and `tags` are optionnals. If you don't provide a custom
 `slug`, one will be auto generated based on the `title` value...
 
 ### Content
+
 Everything under the `-------` delimiters will be parsed as
 `Markdown`. Again, fell free and creative.
 
 ## Extending and Customize Blogit
+
 I try and will try my best to give you the
 ability to extend and override `Blogit`. For now you can easily hack and extend
 `Jrean\Blogit\Blogit.php` and `Jrean\Blogit\BlogitCollection.php` to bring
 your own logic, methods and attributes.
 
 ## Contribute
+
 This package is (yet) under active development and refactoring.
 Please, feel free to comment, contribute and help.
 
 ## Example
+
 I will write soon a dedicated article for `Blogit` which is now used
 on `Production` for [Askjong.com](http://www.askjong.com "AskJong, Quick Updates and Practical Approaches about anything Tech., Laravel, Vim, Php, DigitalOcean and Web Programming.")
