@@ -11,7 +11,6 @@
 namespace Jrean\Blogit\Repository;
 
 use Github\Client;
-use Illuminate\Support\Collection;
 
 abstract class AbstractGithubDocumentRepository implements DocumentRepositoryInterface
 {
