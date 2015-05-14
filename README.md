@@ -181,10 +181,15 @@ I recommand to stick with `.md` files:
     slug: my-custom-slug
     tags: [tag, tag, tag]
     -------
-    ## My Markdown Content 
+    ## My Markdown Content
 
-The `.md` file contains two sections separated by `-------`. One for the
-`metadata`, one for the `content`.
+The `.md` file contains two sections separated by a `delimiter` string. One
+section for the `metadata` and one for the `content`.
+
+### Delimiter String
+
+To separate `metadata` and `content` you MUST use a minimum of three `---`.
+You can use more if you want.
 
 ### Metadata
 
@@ -195,8 +200,8 @@ you'll have access to that metadata as an `array`. The only required key is the
 
 ### Content
 
-Everything under the `-------` delimiters will be parsed as
-`Markdown`. Again, fell free and creative.
+Everything under the `---` will be parsed as `Markdown`. Again, fell free and
+creative.
 
 ## Extending and Customize Blogit
 
