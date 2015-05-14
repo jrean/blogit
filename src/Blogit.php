@@ -34,7 +34,7 @@ class Blogit extends AbstractGithubDocumentRepository
     /**
      * Article(s) Collection
      *
-     * @var \Illuminate\Support\Collection
+     * @var \Jrean\Blogit\BlogitCollection
      */
     protected $articles;
 

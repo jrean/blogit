@@ -1,10 +1,11 @@
 {
     "name": "jrean/blogit",
-    "description": "Blog with Git(hub). Fetch and Parse Documents hosted on Github.",
+    "description": "Blog with Git(hub) For Laravel 5 and Lumen. Fetch and Parse Documents hosted on Github.",
+    "keywords": ["laravel", "lumen", "framework", "markdown", "blog", "Blog", "Laravel Blog", "laravel blog", "Git", "Github", "git", "github"],
     "license": "MIT",
     "authors": [
         {
-            "name": "Jong",
+            "name": "Jean Ragouin",
             "email": "go@askjong.com"
         }
     ],
@@ -19,7 +20,6 @@
         "nesbot/carbon": "~1.14"
     },
     "require-dev": {
-        "symfony/var-dumper": "~2.6"
     },
     "autoload": {
         "psr-4": {
