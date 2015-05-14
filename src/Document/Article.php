@@ -51,6 +51,14 @@ class Article extends AbstractDocument
     protected $tagsRelated;
 
     /**
+     * Content Metadata.
+     * Every `keys / values` above the `---`.
+     *
+     * @var array
+     */
+    protected $contentMetadata;
+
+    /**
      * Create a new Article instance.
      *
      * @param \Jrean\Blogit\Parser\ParserInterface $parser
@@ -61,29 +69,28 @@ class Article extends AbstractDocument
     {
         parent::__construct($parser, $metadata, $commits);
 
-        $contentMetadata = $this->parser->parseMetadata($this->getContent());
+        $this->contentMetadata = $this->parser->parseMetadata($this->getContent());
 
         $this
-            ->setTitle($contentMetadata)
-            ->setSlug($contentMetadata)
-            ->setTags($contentMetadata)
+            ->setTitle()
+            ->setSlug()
+            ->setTags()
             ->setHistoryUrl();
     }
 
     /**
      * Set the Article title.
      *
-     * @param  array $metadata
      * @return \Jrean\Blogit\Document\Article
      *
      * @throws \Exception
      */
-    protected function setTitle(array $metadata)
+    protected function setTitle()
     {
-        if ( ! array_key_exists('title', $metadata) || empty($metadata['title'])) {
+        if ( ! array_key_exists('title', $this->contentMetadata) || empty($this->contentMetadata['title'])) {
             throw new Exception('Title metadata is missing or empty.');
         }
-        $this->title = $metadata['title'];
+        $this->title = $this->contentMetadata['title'];
         return $this;
     }
 
@@ -100,13 +107,12 @@ class Article extends AbstractDocument
     /**
      * Set the Article slug.
      *
-     * @param  array $metadata
      * @return \Jrean\Blogit\Document\Article
      */
-    protected function setSlug(array $metadata)
+    protected function setSlug()
     {
-        if (array_key_exists('slug', $metadata) && !empty($metadata['slug'])) {
-            $this->slug = str_slug($metadata['slug']);
+        if (array_key_exists('slug', $this->contentMetadata) && !empty($this->contentMetadata['slug'])) {
+            $this->slug = str_slug($this->contentMetadata['slug']);
         } else {
             $this->slug = str_slug($this->title);
         }
@@ -126,13 +132,12 @@ class Article extends AbstractDocument
     /**
      * Set the Article tag(s).
      *
-     * @param  array $metadata
      * @return \Jrean\Blogit\Document\Article
      */
-    protected function setTags(array $metadata)
+    protected function setTags()
     {
-        if (array_key_exists('tags', $metadata) && !empty($metadata['tags'])) {
-            $this->tags = $metadata['tags'];
+        if (array_key_exists('tags', $this->contentMetadata) && !empty($this->contentMetadata['tags'])) {
+            $this->tags = $this->contentMetadata['tags'];
         }
         return $this;
     }
