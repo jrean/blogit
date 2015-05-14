@@ -11,7 +11,7 @@
 namespace Jrean\Blogit\Document;
 
 use Jrean\Blogit\Parser\ParserInterface;
-use Illuminate\Support\Collection;
+use Jrean\Blogit\BlogitCollection;
 
 class Article extends AbstractDocument
 {
@@ -46,7 +46,7 @@ class Article extends AbstractDocument
     /**
      * Tag(s) Related Articles.
      *
-     * @var \Illuminate\Support\Collection
+     * @var \Jrean\Blogit\BlogitCollection
      */
     protected $tagsRelated;
 
@@ -134,7 +134,6 @@ class Article extends AbstractDocument
         if (array_key_exists('tags', $metadata) && !empty($metadata['tags'])) {
             $this->tags = $metadata['tags'];
         }
-
         return $this;
     }
 
@@ -155,12 +154,11 @@ class Article extends AbstractDocument
      */
     protected function setHistoryUrl()
     {
-        $base          = 'https://github.com/';
-        $user          = env('GITHUB_USER');
-        $repository    = env('GITHUB_REPOSITORY');
-        $path          = '/commits/master/';
-        $directoryPath = env('GITHUB_ARTICLES_DIRECTORY_PATH');
-
+        $base             = 'https://github.com/';
+        $user             = env('GITHUB_USER');
+        $repository       = env('GITHUB_REPOSITORY');
+        $path             = '/commits/master/';
+        $directoryPath    = env('GITHUB_ARTICLES_DIRECTORY_PATH');
         $this->historyUrl = $base . $user . '/' . $repository . $path . $directoryPath . '/' . $this->filename;
         return $this;
     }
@@ -178,10 +176,10 @@ class Article extends AbstractDocument
     /**
      * Set tags related articles.
      *
-     * @param  \Illuminate\Support\Collection $articles
+     * @param  \Jrean\Blogit\BlogitCollection $articles
      * @return \Jrean\Blogit\Document\Article
      */
-    public function setTagsRelated(Collection $articles)
+    public function setTagsRelated(BlogitCollection $articles)
     {
         $this->tagsRelated = $articles;
         return $this;
@@ -190,7 +188,7 @@ class Article extends AbstractDocument
     /**
      * Get tags related articles.
      *
-     * @return \Illuminate\Support\Collection $articles
+     * @return \Jrean\Blogit\BlogitCollection
      */
     public function getTagsRelated()
     {
