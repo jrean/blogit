@@ -11,6 +11,7 @@
 namespace Jrean\Blogit\Repository;
 
 use Github\Client;
+use Github\HttpClient\Message\ResponseMediator;
 
 abstract class AbstractGithubDocumentRepository implements DocumentRepositoryInterface
 {
@@ -77,5 +78,26 @@ abstract class AbstractGithubDocumentRepository implements DocumentRepositoryInt
     public function getCommitsByPath($path)
     {
         return $this->github->api('repo')->commits()->all($this->user, $this->repository, ['path' => $path]);
+    }
+
+    /**
+     * Get the Api rate limit.
+     *
+     * @return array
+     */
+    public function getApiRateLimit()
+    {
+        return ResponseMediator::getContent($this->github->getHttpClient()->get('rate_limit'));
+    }
+
+    /**
+     * Get the Api core rate limit, remaining and reset delay.
+     *
+     * @return array
+     */
+    public function getApiCoreRateLimit()
+    {
+        $array = $this->getApiRateLimit();
+        return $array['resources']['core'];
     }
 }
