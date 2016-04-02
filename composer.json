@@ -14,7 +14,6 @@
         "illuminate/support": "5.0.*|5.1.*|5.2.*",
         "knplabs/github-api": "~1.4",
         "erusev/parsedown-extra": "^0.7.1",
-        "symfony/yaml": "~3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.1"
@@ -32,6 +31,6 @@
     "config": {
         "preferred-install": "dist"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
