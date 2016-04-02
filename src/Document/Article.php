@@ -48,15 +48,6 @@ class Article extends AbstractDocument
     protected $tagsRelated;
 
     /**
-     * Content Metadata.
-     *
-     * `keys / values` above the `---`.
-     *
-     * @var array
-     */
-    /* protected $contentMetadata; */
-
-    /**
      * Create a new Article instance.
      *
      * @param  \Jrean\Blogit\Parser\ParserInterface  $parser
@@ -194,8 +185,7 @@ class Article extends AbstractDocument
     /**
      * Set tags related articles.
      *
-     * @param  \Jrean\Blogit\BlogitCollection $articles
-     *
+     * @param  \Jrean\Blogit\BlogitCollection  $articles
      * @return \Jrean\Blogit\Document\Article
      */
     public function setTagsRelated(BlogitCollection $articles)

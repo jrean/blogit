@@ -110,7 +110,7 @@ class BlogitServiceProvider extends ServiceProvider
     /**
      * Register the document parser class.
      *
-     * @param \Illuminate\Contracts\Foundation\Application $app
+     * @param  \Illuminate\Contracts\Foundation\Application $app
      * @return void
      */
     protected function registerDocumentParser(Application $app)

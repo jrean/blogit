@@ -118,6 +118,7 @@ abstract class AbstractDocument
             ->setCreatedAt($commits)
             ->setUpdatedAt($commits);
     }
+
     /**
      * Get the document contributor(s).
      *
@@ -232,7 +233,6 @@ abstract class AbstractDocument
      * Set the document creation date.
      *
      * @param  array  $commits
-     *
      * @return \Jrean\Blogit\Document\Document
      */
     protected function setCreatedAt(array $commits)
@@ -248,7 +248,6 @@ abstract class AbstractDocument
      * Get the document creation date.
      *
      * @param  string  $format
-     *
      * @return string
      */
     public function getCreatedAt($format = 'Y-m-d H:i:s')
@@ -260,7 +259,6 @@ abstract class AbstractDocument
      * Set the document last update date.
      *
      * @param  array  $commits
-     *
      * @return \Jrean\Blogit\Document\Document
      */
     protected function setUpdatedAt($commits)
@@ -276,7 +274,6 @@ abstract class AbstractDocument
      * Get the document last update date.
      *
      * @param  string  $format
-     *
      * @return string
      */
     public function getUpdatedAt($format = 'Y-m-d H:i:s')
@@ -288,7 +285,6 @@ abstract class AbstractDocument
      * Get the document last update date diff for humans.
      *
      * @param  string  $format
-     *
      * @return string
      */
     public function getUpdatedAtDiff()

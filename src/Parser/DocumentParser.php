@@ -32,7 +32,6 @@ class DocumentParser extends Parsedown implements ParserInterface
      * Parse metadata.
      *
      * @param  string  $content
-     *
      * @return array
      *
      * @throws \RuntimeException
@@ -51,7 +50,6 @@ class DocumentParser extends Parsedown implements ParserInterface
      *
      * @param  string  $content
      * @param  int  $offset
-     *
      * @return string
      *
      * @throws \RuntimeException
