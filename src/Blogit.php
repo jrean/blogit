@@ -146,7 +146,7 @@ class Blogit
     }
 
     /**
-     * Get Articles by a tag.
+     * Get articles by a tag.
      *
      * @param  string  $tag
      * @return \Jrean\Blogit\BlogitCollection
@@ -169,5 +169,18 @@ class Blogit
         return $this->getArticles()->filter(function($article) use($tags) {
             return !empty(array_intersect($tags, $article->getTags()));
         });
+    }
+
+    /**
+     * Get article by slug.
+     *
+     * @param  string  $slug
+     * @return \Jrean\Blogit\Document\Article;
+     */
+    public function getArticleBySlug($slug)
+    {
+        return $this->getArticles()->filter(function($article) use($slug) {
+            return $article->getSlug() == $slug;
+        })->first();
     }
 }
