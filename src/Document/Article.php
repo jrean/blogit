@@ -34,37 +34,69 @@ class Article extends AbstractDocument
     protected $tags = [];
 
     /**
-     * Article History Url.
-     *
-     * @var string
-     */
-    protected $historyUrl;
-
-    /**
-     * Tag(s) Related Articles.
+     * Related articles by tags.
      *
      * @var \Jrean\Blogit\BlogitCollection
      */
-    protected $tagsRelated;
+    protected $relatedArticles;
+
+    /**
+     * Article metadata.
+     *
+     * @var array
+     */
+    protected $metadata;
 
     /**
      * Create a new Article instance.
      *
      * @param  \Jrean\Blogit\Parser\ParserInterface  $parser
-     * @param  array  $metadata
+     * @param  array  $metadata document metadata
      * @param  array  $commits
      */
     public function __construct(ParserInterface $parser, array $metadata, array $commits)
     {
         parent::__construct($parser, $metadata, $commits);
 
-        $contentMetadata = $this->parser->parseMetadata($this->getContent());
+        $this->metadata = $this->parser->parseMetadata($this->getContent());
 
         $this
-            ->setTitle($contentMetadata)
-            ->setSlug($contentMetadata)
-            ->setTags($contentMetadata)
-            ->setHistoryUrl();
+            ->setTitle($this->metadata)
+            ->setSlug($this->metadata)
+            ->setTags($this->metadata);
+    }
+
+    /**
+     * Get the proper getMetadata call.
+     *
+     * @param  string  $name
+     * @param  string  $arguments
+     * @return string
+     */
+    public function __call($name, $arguments)
+    {
+        if (substr($name, 0, 3) != 'get') {
+            throw new RuntimeException('Call to undefined method Jrean\Blogit\Document\Article::' . $name);
+        }
+
+        return $this->getMetadata(strtolower(ltrim($name, 'get')));
+    }
+
+    /**
+     * Get the requested metadata value.
+     *
+     * @param  string  $value
+     * @return string
+     *
+     * @throws \RuntimeException
+     */
+    public function getMetadata($value)
+    {
+        if ( ! array_key_exists($value, $this->metadata) || empty($this->metadata[$value])) {
+            throw new RuntimeException('The metadata ' . $value . ' for the article ' . $this->title . ' doesn\'t exist or is empty');
+        }
+
+        return $this->metadata[$value];
     }
 
     /**
@@ -155,53 +187,25 @@ class Article extends AbstractDocument
     }
 
     /**
-     * Set the article history url.
-     *
-     * @return \Jrean\Blogit\Document\Article
-     */
-    protected function setHistoryUrl()
-    {
-        $base = 'https://github.com/';
-        $user = env('GITHUB_USER');
-        $repository = env('GITHUB_REPOSITORY');
-        $path = '/commits/master/';
-        $directoryPath = env('GITHUB_ARTICLES_DIRECTORY_PATH');
-
-        $this->historyUrl = $base . $user . '/' . $repository . $path . $directoryPath . '/' . $this->filename;
-
-        return $this;
-    }
-
-    /**
-     * Get the Article History Url.
-     *
-     * @return string
-     */
-    public function getHistoryUrl()
-    {
-        return $this->historyUrl;
-    }
-
-    /**
-     * Set tags related articles.
+     * Set related articles.
      *
      * @param  \Jrean\Blogit\BlogitCollection  $articles
      * @return \Jrean\Blogit\Document\Article
      */
-    public function setTagsRelated(BlogitCollection $articles)
+    public function setRelatedArticles(BlogitCollection $articles)
     {
-        $this->tagsRelated = $articles;
+        $this->relatedArticles = $articles;
 
         return $this;
     }
 
     /**
-     * Get tags related articles.
+     * Get related articles.
      *
      * @return \Jrean\Blogit\BlogitCollection
      */
-    public function getTagsRelated()
+    public function getRelatedArticles()
     {
-        return $this->tagsRelated;
+        return $this->relatedArticles;
     }
 }

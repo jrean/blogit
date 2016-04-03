@@ -96,6 +96,13 @@ abstract class AbstractDocument
     protected $commits;
 
     /**
+     * Article History Url.
+     *
+     * @var string
+     */
+    protected $historyUrl;
+
+    /**
      * Create a new document instance.
      *
      * @param  \Jrean\Blogit\Parser\ParserInterface  $parser
@@ -117,6 +124,7 @@ abstract class AbstractDocument
         $this
             ->setCreatedAt($commits)
             ->setUpdatedAt($commits);
+        $this->historyUrl = $this->setHistoryUrl();
     }
 
     /**
@@ -340,5 +348,33 @@ abstract class AbstractDocument
     public function getLastCommitUrl()
     {
         return array_get(head($this->getCommits()), 'html_url');
+    }
+
+    /**
+     * Set the article history url.
+     *
+     * @return \Jrean\Blogit\Document\Article
+     */
+    protected function setHistoryUrl()
+    {
+        $base = 'https://github.com/';
+        $user = env('GITHUB_USER');
+        $repository = env('GITHUB_REPOSITORY');
+        $path = '/commits/master/';
+        $directoryPath = env('GITHUB_DOCUMENTS_DIRECTORY_PATH');
+
+        $this->historyUrl = $base . $user . '/' . $repository . $path . $directoryPath . '/' . $this->filename;
+
+        return $this;
+    }
+
+    /**
+     * Get the Article History Url.
+     *
+     * @return string
+     */
+    public function getHistoryUrl()
+    {
+        return $this->historyUrl;
     }
 }
