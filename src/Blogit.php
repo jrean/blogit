@@ -68,25 +68,34 @@ class Blogit
     {
         $documents = $this->documents->getAll();
 
+        // Make and push the new article into the collection.
         foreach ($documents as $document) {
-
             $article = $this->makeArticle($document['path']);
-
             $this->collection->push($article);
         }
 
-        /* foreach ($this->collection as $article) { */
-        /*     $related = $this->getRelatedArticlesByTags($article); */
-        /*     $article->setTagsRelated($related); */
-        /* } */
+        // Set the previous and next articles for each article.
+        $this->collection = $this->collection->each(function($article, $key) {
+            if (($previous = $this->collection->get($key - 1)) instanceof Article) {
+                $article->setPrevious($previous);
+            }
+
+            if (($next = $this->collection->get($key + 1)) instanceof Article) {
+                $article->setNext($next);
+            }
+        });
+
+        // Set the related articles for each article.
+        $this->collection = $this->collection->each(function($article) {
+            $related = $this->getRelatedArticlesByTags($article);
+            $article->setRelatedArticles($related);
+        });
     }
 
     /**
      * Create a new article instance.
      *
-     * @param  array  $metadata
-     * @param  array  $commits
-     *
+     * @param  string  $path
      * @return void Jrean\Blogit\Document\Article
      */
     protected function makeArticle($path)

@@ -34,6 +34,20 @@ class Article extends AbstractDocument
     protected $tags = [];
 
     /**
+     * Previous article.
+     *
+     * @var \Jrean\Blogit\Document\Article
+     */
+    protected $previous;
+
+    /**
+     * Next article.
+     *
+     * @var \Jrean\Blogit\Document\Article
+     */
+    protected $next;
+
+    /**
      * Related articles by tags.
      *
      * @var \Jrean\Blogit\BlogitCollection
@@ -207,5 +221,51 @@ class Article extends AbstractDocument
     public function getRelatedArticles()
     {
         return $this->relatedArticles;
+    }
+
+    /**
+     * Set previous article.
+     *
+     * @param  \Jrean\Blogit\Document\Article  $article
+     * @return \Jrean\Blogit\Document\Article
+     */
+    public function setPrevious(Article $article)
+    {
+        $this->previous = $article;
+
+        return $this;
+    }
+
+    /**
+     * Get previous articles.
+     *
+     * @return \Jrean\Blogit\Document\Article | null
+     */
+    public function getPrevious()
+    {
+        return $this->previous;
+    }
+
+    /**
+     * Set previous article.
+     *
+     * @param  \Jrean\Blogit\BlogitCollection  $article
+     * @return \Jrean\Blogit\Document\Article
+     */
+    public function setNext(Article $article)
+    {
+        $this->next = $article;
+
+        return $this;
+    }
+
+    /**
+     * Get next article.
+     *
+     * @return \Jrean\Blogit\Document\Article | null
+     */
+    public function getNext()
+    {
+        return $this->next;
     }
 }
