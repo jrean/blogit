@@ -6,6 +6,7 @@
  */
 namespace Jrean\Blogit;
 
+use Illuminate\Support\Collection;
 use Jrean\Blogit\Repositories\Contracts\DocumentRepositoryInterface;
 use Jrean\Blogit\BlogitCollection;
 use Jrean\Blogit\Document\ArticleFactory;
@@ -191,5 +192,47 @@ class Blogit
         return $this->getArticles()->filter(function($article) use($slug) {
             return $article->getSlug() == $slug;
         })->first();
+    }
+
+    /**
+     * Get the full tag list.
+     *
+     * @param  \Jrean\Blogit\BlogitCollection  $articles
+     * @return array
+     */
+    public function getTagsList(BlogitCollection $articles)
+    {
+        $tags = [];
+
+        $articles->each(function($article) use(&$tags) {
+            foreach ($article->getTags() as $tag) {
+                if ( ! in_array($tag, $tags)) {
+                    array_push($tags, $tag);
+                }
+            }
+        });
+
+        return $tags;
+    }
+
+    /**
+     * Get the full tag list with number of articles.
+     *
+     * @param  \Jrean\Blogit\BlogitCollection  $articles
+     * @return array
+     */
+    public function getTagsListWithCount(BlogitCollection $articles)
+    {
+        $tags = [];
+
+        $articles->each(function($article) use(&$tags) {
+            foreach ($article->getTags() as $tag) {
+                if ( ! in_array($tag, $tags)) {
+                    $tags[$tag] = $this->getArticlesByTag($tag)->count();
+                }
+            }
+        });
+
+        return $tags;
     }
 }
