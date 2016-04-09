@@ -201,14 +201,13 @@ class Blogit
      * - tag slug
      * - number of article(s) for a tag
      *
-     * @param  \Jrean\Blogit\BlogitCollection  $articles
      * @return \Illuminate\Support\Collection
      */
-    public function getTagsList(BlogitCollection $articles)
+    public function getTagsList()
     {
         $tags = new Collection;
 
-        $articles->each(function($article) use(&$tags) {
+        $this->getArticles()->each(function($article) use(&$tags) {
             foreach ($article->getTags() as $tag) {
                 if ( ! $tags->contains('name', $tag)) {
                     $tags->push([
