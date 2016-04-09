@@ -197,38 +197,25 @@ class Blogit
     /**
      * Get the full tag list.
      *
+     * - tag name
+     * - tag slug
+     * - number of article(s) for a tag
+     *
      * @param  \Jrean\Blogit\BlogitCollection  $articles
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     public function getTagsList(BlogitCollection $articles)
     {
-        $tags = [];
+        $tags = new Collection;
 
         $articles->each(function($article) use(&$tags) {
             foreach ($article->getTags() as $tag) {
-                if ( ! in_array($tag, $tags)) {
-                    array_push($tags, $tag);
-                }
-            }
-        });
-
-        return $tags;
-    }
-
-    /**
-     * Get the full tag list with number of articles.
-     *
-     * @param  \Jrean\Blogit\BlogitCollection  $articles
-     * @return array
-     */
-    public function getTagsListWithCount(BlogitCollection $articles)
-    {
-        $tags = [];
-
-        $articles->each(function($article) use(&$tags) {
-            foreach ($article->getTags() as $tag) {
-                if ( ! in_array($tag, $tags)) {
-                    $tags[$tag] = $this->getArticlesByTag($tag)->count();
+                if ( ! $tags->contains('name', $tag)) {
+                    $tags->push([
+                        'name' => $tag,
+                        'slug' => str_slug($tag),
+                        'articles' => $this->getArticlesByTag($tag)->count()
+                    ]);
                 }
             }
         });

@@ -2,7 +2,7 @@
 
 **jrean/blogit** is a PHP wrapper for the Github API (not yet Framework
 Agnostic) built for Laravel/Lumen to publish easily your content and "Blog with
-Git". test
+Git".
 
 ## Goals
 
