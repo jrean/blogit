@@ -107,7 +107,8 @@ class Article extends AbstractDocument
     public function getMetadata($value)
     {
         if ( ! array_key_exists($value, $this->metadata) || empty($this->metadata[$value])) {
-            throw new RuntimeException('The metadata ' . $value . ' for the article ' . $this->title . ' doesn\'t exist or is empty');
+            /* throw new RuntimeException('The metadata ' . $value . ' for the article ' . $this->title . ' doesn\'t exist or is empty'); */
+            return null;
         }
 
         return $this->metadata[$value];
