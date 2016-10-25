@@ -78,7 +78,14 @@ class Blogit
 
         // Make and push the new article into the collection.
         foreach ($documents as $document) {
-            $article = $this->makeArticle($document['path']);
+            if (config('blogit.cache')) {
+                $article = Cache::remember($document['sha'], 10, function() use($document) {
+                    return $this->makeArticle($document['path']);
+                });
+            } else {
+                $article = $this->makeArticle($document['path']);
+            }
+
             $this->collection->push($article);
         }
 
