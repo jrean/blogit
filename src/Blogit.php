@@ -69,7 +69,7 @@ class Blogit
     protected function init()
     {
         if (config('blogit.cache')) {
-            $documents = Cache::remember('documents', 10, function() {
+            $documents = Cache::remember('documents', env('blogit.cache_expiration'), function() {
                 return $this->documents->getAll();
             });
         } else {
@@ -79,7 +79,7 @@ class Blogit
         // Make and push the new article into the collection.
         foreach ($documents as $document) {
             if (config('blogit.cache')) {
-                $article = Cache::remember($document['sha'], 10, function() use($document) {
+                $article = Cache::remember($document['sha'], config('blogit.cache_expiration'), function() use($document) {
                     return $this->makeArticle($document['path']);
                 });
             } else {
