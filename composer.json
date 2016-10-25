@@ -11,8 +11,8 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "illuminate/support": "5.0.*|5.1.*|5.2.*",
-        "knplabs/github-api": "~1.4",
+        "illuminate/support": "5.0.*|5.1.*|5.2.*|5.3.*",
+        "knplabs/github-api": "~1.7",
         "erusev/parsedown-extra": "^0.7.1"
     },
     "require-dev": {

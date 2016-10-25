@@ -19,6 +19,20 @@ use Jrean\Blogit\Parser\DocumentParser;
 class BlogitServiceProvider extends ServiceProvider
 {
     /**
+     * Perform post-registration booting of services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        // configurations
+        $this->publishes([
+            __DIR__ . '/config/blogit.php' => config_path('blogit.php')
+        ], 'config');
+
+    }
+
+    /**
      * Register the service provider.
      *
      * @return void
