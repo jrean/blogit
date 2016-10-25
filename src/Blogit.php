@@ -7,6 +7,7 @@
 namespace Jrean\Blogit;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Jrean\Blogit\Repositories\Contracts\DocumentRepositoryInterface;
 use Jrean\Blogit\BlogitCollection;
 use Jrean\Blogit\Document\ArticleFactory;
@@ -67,7 +68,13 @@ class Blogit
      */
     protected function init()
     {
-        $documents = $this->documents->getAll();
+        if (config('blogit.cache')) {
+            $documents = Cache::remember('documents', 10, function() {
+                return $this->documents->getAll();
+            });
+        } else {
+            $documents = $this->documents->getAll();
+        }
 
         // Make and push the new article into the collection.
         foreach ($documents as $document) {
