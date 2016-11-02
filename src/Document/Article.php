@@ -62,6 +62,13 @@ class Article extends AbstractDocument
     protected $metadata;
 
     /**
+     * Article History Url.
+     *
+     * @var string
+     */
+    protected $historyUrl;
+
+    /**
      * Create a new Article instance.
      *
      * @param  \Jrean\Blogit\Parser\ParserInterface  $parser
@@ -77,7 +84,8 @@ class Article extends AbstractDocument
         $this
             ->setTitle($this->metadata)
             ->setSlug($this->metadata)
-            ->setTags($this->metadata);
+            ->setTags($this->metadata)
+            ->setHistoryUrl();
     }
 
     /**
@@ -269,4 +277,5 @@ class Article extends AbstractDocument
     {
         return $this->next;
     }
+
 }
