@@ -96,7 +96,7 @@ abstract class AbstractDocument
     protected $commits;
 
     /**
-     * Article History Url.
+     * Document History Url.
      *
      * @var string
      */
@@ -123,8 +123,8 @@ abstract class AbstractDocument
         $this->commits = $commits;
         $this
             ->setCreatedAt($commits)
-            ->setUpdatedAt($commits);
-        $this->historyUrl = $this->setHistoryUrl();
+            ->setUpdatedAt($commits)
+            ->setHistoryUrl();
     }
 
     /**
@@ -351,9 +351,9 @@ abstract class AbstractDocument
     }
 
     /**
-     * Set the article history url.
+     * Set the document history url.
      *
-     * @return \Jrean\Blogit\Document\Article
+     * @return \Jrean\Blogit\Document\AbstractDocument
      */
     protected function setHistoryUrl()
     {
