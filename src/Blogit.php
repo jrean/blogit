@@ -12,6 +12,7 @@ use Jrean\Blogit\Repositories\Contracts\DocumentRepositoryInterface;
 use Jrean\Blogit\BlogitCollection;
 use Jrean\Blogit\Document\ArticleFactory;
 use Jrean\Blogit\Document\Article;
+use Carbon\Carbon;
 
 class Blogit
 {
@@ -69,7 +70,7 @@ class Blogit
     protected function init()
     {
         if (config('blogit.cache')) {
-            $documents = Cache::remember('documents', env('blogit.cache_expiration'), function() {
+            $documents = Cache::remember('documents', config('blogit.cache_expiration'), function() {
                 return $this->documents->getAll();
             });
         } else {
@@ -151,7 +152,12 @@ class Blogit
      */
     public function getArticles()
     {
-        return $this->collection;
+        return $this->collection->reject(function ($article) {
+            if ($date = $article->getPublish()) {
+                $publish = Carbon::createFromTimestamp($date);
+                return (Carbon::now())->lte($publish);
+            }
+        });
     }
 
     /**
